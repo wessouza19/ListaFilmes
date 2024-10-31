@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lista_filmes/data/models/movie.dart';
+import 'package:lista_filmes/pages/movie_list/widgets/movie_item_widget.dart';
+import 'package:lista_filmes/pages/movie_list/widgets/progress_indicator_widget.dart';
 import 'package:lista_filmes/service_locator.dart';
 import 'package:lista_filmes/pages/movie_list/movie_list_controller.dart';
 
@@ -19,10 +21,11 @@ class _MovieListPageState extends State<MovieListPage> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Movie App'),
+          title: const Text('Movie App'),
           actions: [
             IconButton(
               onPressed: () {},
@@ -34,7 +37,7 @@ class _MovieListPageState extends State<MovieListPage> {
           stream: controller.stream,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Text('waiting');
+              return const ProgressIndicatorWidget();
             }
 
             var movies = snapshot.data!;
@@ -44,8 +47,8 @@ class _MovieListPageState extends State<MovieListPage> {
               itemBuilder: (context, index) {
                 var movie = movies[index];
 
-                return ListTile(
-                  title: Text(movie.name),
+                return MovieItemWidget(
+                  movie: movie,
                 );
               },
             );
