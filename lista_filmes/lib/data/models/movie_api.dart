@@ -14,4 +14,10 @@ class MovieApi {
     // return response;
     //return List.empty();
   }
+
+  Future<Movie> getMovie(int id) async {
+    var response = await _dio.get('/Filme/$id');
+
+    return Movie.fromJson(response.data);
+  }
 }

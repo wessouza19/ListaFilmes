@@ -17,8 +17,8 @@ class MovieDetailController {
   }
 
   Future<void> getMovie() async {
-    // var result = await api.getMovies();
+    var result = await api.getMovie(_movie.id);
 
-    //_controller.sink.add(result);
+    _controller.sink.add(result);
   }
 }

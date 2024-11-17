@@ -1,14 +1,14 @@
 class MovieComment {
   MovieComment(
-      {required this.id, required this.comments, required this.createdAt});
+      {required this.id, required this.comment, required this.createdAt});
 
   final int id;
-  final String comments;
+  final String comment;
   final DateTime createdAt;
 
   factory MovieComment.fromJson(Map<String, dynamic> json) => MovieComment(
         id: json['id'],
-        comments: json['comments'],
+        comment: json['comment'],
         createdAt: DateTime.parse(json['date_created']),
       );
 }

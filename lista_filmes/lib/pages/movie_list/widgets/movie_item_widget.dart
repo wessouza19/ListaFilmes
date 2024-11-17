@@ -44,7 +44,7 @@ class MovieItemWidget extends StatelessWidget {
                   Text(prettyDuration(Duration(minutes: movie.duration),
                       abbreviated: true, delimiter: ' ', spacer: '')),
                   const Text(' | '),
-                  Text('${movie.gender}'),
+                  Text(movie.gender),
                 ],
               ),
               Text('Ano: ${movie.year}')
