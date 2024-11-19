@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lista_filmes/data/models/movie.dart';
+import 'package:lista_filmes/pages/movie_detail/movie_detail_controller.dart';
+import 'package:lista_filmes/pages/movie_detail/widgets/delete_comment_widget.dart';
+import 'package:lista_filmes/service_locator.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class MovieDetailCommentsWidget extends StatelessWidget {
-  const MovieDetailCommentsWidget({super.key, required this.movie});
+  MovieDetailCommentsWidget({super.key, required this.movie});
 
+  final controller = getIt<MovieDetailController>();
   final Movie movie;
 
   @override
@@ -25,7 +29,14 @@ class MovieDetailCommentsWidget extends StatelessWidget {
               const SizedBox(width: 12.0),
               const Text('•'),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => DeleteCommentWidget(
+                          onDeleted: () async =>
+                              controller.deleteComment(comment.id)),
+                    );
+                  },
                   style: TextButton.styleFrom(
                       visualDensity: VisualDensity.compact),
                   child: const Text('Excluir')),

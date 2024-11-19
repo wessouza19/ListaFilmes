@@ -20,4 +20,8 @@ class MovieApi {
 
     return Movie.fromJson(response.data);
   }
+
+  Future<void> deleteComent(int movieId, int id) async {
+    await _dio.delete('/Filme/$movieId/Comentario/$id');
+  }
 }

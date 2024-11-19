@@ -21,4 +21,10 @@ class MovieDetailController {
 
     _controller.sink.add(result);
   }
+
+  Future<void> deleteComment(int id) async {
+    await api.deleteComent(_movie.id, id);
+
+    getMovie();
+  }
 }
