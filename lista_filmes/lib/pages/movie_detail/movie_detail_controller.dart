@@ -23,7 +23,13 @@ class MovieDetailController {
   }
 
   Future<void> deleteComment(int id) async {
-    await api.deleteComent(_movie.id, id);
+    await api.deleteComment(_movie.id, id);
+
+    getMovie();
+  }
+
+  Future<void> postComment(String comment) async {
+    await api.postComment(_movie.id, comment);
 
     getMovie();
   }

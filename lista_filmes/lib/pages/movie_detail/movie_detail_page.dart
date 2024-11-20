@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lista_filmes/data/models/movie.dart';
+import 'package:lista_filmes/pages/movie_detail/widgets/add_comment_widget.dart';
 import 'package:lista_filmes/pages/movie_detail/widgets/movie_detail_about_widget.dart';
 import 'package:lista_filmes/pages/movie_detail/widgets/movie_detail_comments.dart';
 import 'package:lista_filmes/pages/movie_detail/widgets/movie_detail_cover_widget.dart';
@@ -82,7 +83,8 @@ class _MovieListPageState extends State<MovieDetailPage> {
             else
               MovieDetailCommentsWidget(
                 movie: movie,
-              )
+              ),
+            const AddCommentWidget(),
           ],
         );
       },
