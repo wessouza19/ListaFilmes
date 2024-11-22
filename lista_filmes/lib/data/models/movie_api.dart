@@ -1,4 +1,6 @@
+import 'dart:ffi';
 import 'package:dio/dio.dart';
+import 'package:lista_filmes/data/exception_handlers.dart';
 import 'package:lista_filmes/data/models/movie.dart';
 
 class MovieApi {
@@ -6,8 +8,12 @@ class MovieApi {
     BaseOptions(baseUrl: 'https://apifilmes.webevolui.com'),
   );
 
+  MovieApi() {
+    _dio.interceptors.add(AppInterceptors());
+  }
+
   Future<List<Movie>> getMovies({int skip = 0, int take = 20}) async {
-    var response = await _dio.get('/Filme?skip$skip&take=$take');
+    var response = await _dio.get('/Filme?skip=$skip&take=$take');
 
     return (response.data as List).map((item) => Movie.fromJson(item)).toList();
 
@@ -21,6 +27,12 @@ class MovieApi {
     return Movie.fromJson(response.data);
   }
 
+  Future<List<Movie>> searchMovie(String query) async {
+    var response = await _dio.get('/Filme?q=$query');
+
+    return (response.data as List).map((item) => Movie.fromJson(item)).toList();
+  }
+
   Future<void> deleteComment(int movieId, int id) async {
     await _dio.delete('/Filme/$movieId/Comentario/$id');
   }
@@ -29,5 +41,23 @@ class MovieApi {
     await _dio.post('/Filme/$movieId/Comentario', data: {
       'comment': comment,
     });
+  }
+}
+
+class AppInterceptors extends Interceptor {
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    switch (err.type) {
+      case DioExceptionType.badResponse:
+        switch (err.response?.statusCode) {
+          case 400:
+            throw BadRequestException(err.requestOptions, err.response);
+          case 500:
+            throw InternalServerErrorException(err.requestOptions);
+        }
+        break;
+      default:
+    }
+    return handler.next(err);
   }
 }

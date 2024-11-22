@@ -39,55 +39,57 @@ class _MovieListPageState extends State<MovieDetailPage> {
     // var movie = widget.movie;
 
     return Scaffold(
+        backgroundColor: Color.alphaBlend(
+            Colors.black12, Theme.of(context).scaffoldBackgroundColor),
         body: StreamBuilder<Movie>(
-      initialData: widget.movie,
-      stream: controller.stream,
-      builder: (context, snapshot) {
-        var movie = snapshot.data!;
+          initialData: widget.movie,
+          stream: controller.stream,
+          builder: (context, snapshot) {
+            var movie = snapshot.data!;
 
-        //  if (snapshot.connectionState == ConnectionState.waiting) {
-        //     return const ProgressIndicatorWidget();
-        //  }
+            //  if (snapshot.connectionState == ConnectionState.waiting) {
+            //     return const ProgressIndicatorWidget();
+            //  }
 
-        return CustomScrollView(
-          slivers: [
-            MovieDetailCoverWidget(
-              movie: movie,
-            ),
-            MovieDetailAboutWidget(
-              movie: movie,
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding:
-                    const EdgeInsets.only(top: 32.0, left: 16.0, right: 16.0),
-                child: Text(
-                  'Comentários',
-                  style: Theme.of(context).textTheme.titleMedium,
+            return CustomScrollView(
+              slivers: [
+                MovieDetailCoverWidget(
+                  movie: movie,
                 ),
-              ),
-            ),
-            if (snapshot.connectionState == ConnectionState.waiting)
-              const SliverToBoxAdapter(child: ProgressIndicatorWidget())
-            else if (movie.comments.isEmpty)
-              SliverPadding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                sliver: SliverToBoxAdapter(
-                  child: Text(
-                    'Seja o primeiro a comentar esse filme',
-                    style: Theme.of(context).textTheme.bodySmall,
+                MovieDetailAboutWidget(
+                  movie: movie,
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 16.0, left: 16.0, right: 16.0),
+                    child: Text(
+                      'Comentários',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                   ),
                 ),
-              )
-            else
-              MovieDetailCommentsWidget(
-                movie: movie,
-              ),
-            const AddCommentWidget(),
-          ],
-        );
-      },
-    ));
+                if (snapshot.connectionState == ConnectionState.waiting)
+                  const SliverToBoxAdapter(child: ProgressIndicatorWidget())
+                else if (movie.comments.isEmpty)
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 16.0),
+                    sliver: SliverToBoxAdapter(
+                      child: Text(
+                        'Seja o primeiro a comentar esse filme',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
+                  )
+                else
+                  MovieDetailCommentsWidget(
+                    movie: movie,
+                  ),
+                const AddCommentWidget(),
+              ],
+            );
+          },
+        ));
   }
 }

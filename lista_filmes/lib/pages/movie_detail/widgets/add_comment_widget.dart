@@ -24,7 +24,7 @@ class _AddCommentWidgetState extends State<AddCommentWidget> {
         padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
         child: Card(
           child: Container(
-            color: Colors.black45,
+            color: Theme.of(context).scaffoldBackgroundColor,
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
